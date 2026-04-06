@@ -1,9 +1,12 @@
+## ⛓️ Pipeline Arkitektura (GitOps)
 
+```mermaid
 graph LR
   A[Sokol (Code)] -->|Git Push| B(GitHub)
   B -->|Webhook| C(Netlify CI/CD)
   B -->|Docker Build| D(Docker Image)
   C -->|Deploy| E[Live Website]
+
 
 Deployment":
 🔍 Risitë e Versionit 2.0:
