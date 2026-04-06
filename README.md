@@ -3,9 +3,10 @@
 ```mermaid
 graph LR
   A[Sokol (Code)] -->|Git Push| B(GitHub)
-  B -->|Webhook| C(Netlify CI/CD)
-  B -->|Docker Build| D(Docker Image)
-  C -->|Deploy| E[Live Website]
+  B -->|GitHub Actions| C{Lint Test}
+  C -->|Pass| D(Netlify CI/CD)
+  C -->|Build| E(Docker Image)
+  D -->|Deploy| F[Live Website]
 
 
 Deployment":
