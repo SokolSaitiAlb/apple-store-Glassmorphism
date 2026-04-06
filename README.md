@@ -2,11 +2,12 @@
 
 ```mermaid
 graph LR
-  A[Sokol (Code)] -->|Git Push| B(GitHub)
+  A[Sokol Code] -->|Git Push| B(GitHub)
   B -->|GitHub Actions| C{Lint Test}
   C -->|Pass| D(Netlify CI/CD)
   C -->|Build| E(Docker Image)
   D -->|Deploy| F[Live Website]
+
 
 
 Deployment":
