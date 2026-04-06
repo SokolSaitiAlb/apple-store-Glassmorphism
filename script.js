@@ -1,30 +1,37 @@
-async function initApp() {
-    const res = await fetch('products.json');
-    const products = await res.json();
+async function loadStore() {
+    const response = await fetch('products.json');
+    const products = await response.json();
     
-    const render = (items) => {
-        document.getElementById('productGrid').innerHTML = items.map(p => `
+    const displayProducts = (list) => {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = list.map(p => `
             <div class="glass-card">
                 <img src="${p.image}" class="product-img">
-                <h3>${p.name}</h3>
-                <p>${p.desc}</p>
-                <div style="display:flex; justify-content:space-between; align-items:center">
-                    <span>${p.price}</span>
-                    <button class="add-btn">Shto</button>
+                <h2>${p.name}</h2>
+                <p style="opacity:0.6">${p.desc}</p>
+                <div style="display:flex; justify-content:space-between; margin-top:20px">
+                    <span style="font-weight:bold">${p.price}</span>
+                    <button style="padding:10px 20px; border-radius:10px; border:none; cursor:pointer">Bli Tani</button>
                 </div>
             </div>
         `).join('');
     };
 
-    render(products);
+    displayProducts(products);
 
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            const cat = e.target.dataset.category;
-            render(cat === 'all' ? products : products.filter(p => p.category === cat));
-        });
+    // Sidebar Logic
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('openMenu').onclick = () => sidebar.classList.add('active');
+    document.getElementById('closeMenu').onclick = () => sidebar.classList.remove('active');
+
+    // Filtering from Sidebar
+    document.querySelectorAll('.sidebar-links a').forEach(link => {
+        link.onclick = (e) => {
+            const cat = e.target.closest('a').dataset.filter;
+            displayProducts(products.filter(p => p.category === cat));
+            sidebar.classList.remove('active');
+        };
     });
 }
-initApp();
+
+document.addEventListener('DOMContentLoaded', loadStore);
