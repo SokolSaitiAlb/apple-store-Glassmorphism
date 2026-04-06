@@ -1,82 +1,127 @@
-/* 1. Rregullimi i trupit të faqes (Background-i Luxe) */
+/* 1. RESET DHE TRUPI (Dark-Luxe Mode) */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
-    background: #0f0f0f; /* E zezë e thellë */
+    background: #0f0f0f; /* E zezë e thellë Apple style */
     color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
 }
 
-/* 2. Container-i i produkteve (Grid-i) */
+/* 2. CONTAINER-I I PRODUKTEVE (Grid-i) */
 .product-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
-    padding: 50px;
-    width: 90%;
+    padding: 100px 50px; /* Hapësirë që mos t'i zërë shporta produktet */
+    width: 100%;
+    max-width: 1200px;
 }
 
-/* 3. Kartela e produktit (Këtu rregullohen ikonat) */
+/* 3. KARTELA E PRODUKTIT (Glassmorphism) */
 .product-card {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 24px;
+    padding: 30px;
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-card:hover {
     transform: translateY(-10px);
-    border-color: #0071e3; /* Bluja e Apple */
+    border-color: #0071e3;
+    background: rgba(255, 255, 255, 0.08);
 }
 
-/* FIX: Kjo ndalon ikonat të bëhen gjigante */
-.product-card img {
-    width: 100%;
-    height: 200px; /* Lartësi fikse */
-    object-fit: contain; /* Nuk e shtrembëron foton */
-    margin-bottom: 15px;
+/* FIX: Kjo ndalon fotot gjigante - KRITIKE */
+.product-card img, .product-img {
+    width: 100% !important;
+    height: 220px !important; /* Lartësi fikse që të jenë të gjitha baras */
+    object-fit: contain !important; /* Nuk lejon shtrirjen/deformimin */
+    margin-bottom: 20px;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
 }
 
-/* 4. Shporta në cep (Fixed Position) */
+.product-card h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+/* 4. SHPORTA (Fixed Position - "Varet në cep") */
 #cart-container {
     position: fixed;
     top: 20px;
     right: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px); /* Efekti Glassmorphism */
+    background: rgba(20, 20, 20, 0.8);
+    backdrop-filter: blur(20px);
     padding: 20px;
-    border-radius: 15px;
+    border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 280px;
-    z-index: 9999;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    width: 300px;
+    z-index: 9999; /* Gjithmonë sipër çdo gjëje */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+#cart-container h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
 }
 
 #cart-items {
     list-style: none;
     padding: 0;
-    font-size: 0.9rem;
-    max-height: 200px;
+    margin: 10px 0;
+    font-size: 0.85rem;
+    max-height: 250px;
     overflow-y: auto;
 }
 
-/* 5. Butoni Bli Tani */
+#cart-items li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 5. BUTONI "BLI TANI" (Apple Style) */
 .buy-btn {
     background: #0071e3;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
+    padding: 12px 24px;
+    border-radius: 30px;
     cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s ease;
+    width: 100%;
+    margin-top: 15px;
 }
 
 .buy-btn:hover {
     background: #005bb5;
+}
+
+/* Scrollbar-i për shportën */
+#cart-items::-webkit-scrollbar {
+    width: 5px;
+}
+#cart-items::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
 }
