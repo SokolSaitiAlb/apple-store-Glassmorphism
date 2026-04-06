@@ -1,3 +1,10 @@
+
+graph LR
+  A[Sokol (Code)] -->|Git Push| B(GitHub)
+  B -->|Webhook| C(Netlify CI/CD)
+  B -->|Docker Build| D(Docker Image)
+  C -->|Deploy| E[Live Website]
+
  🍏 Apple & JBL Premium Glassmorphism Store
 Kjo është një platformë e-commerce "High-End" e ndërtuar me fokus në UI/UX moderne (Glassmorphism) dhe Infrastrukturë DevOps. Projekti shërben si një "Technical Showcase" për implementimin e teknologjive cloud-native dhe automatizimit.
 🚀 Karakteristikat Teknike
