@@ -5,6 +5,12 @@ graph LR
   B -->|Docker Build| D(Docker Image)
   C -->|Deploy| E[Live Website]
 
+Deployment":
+🔍 Risitë e Versionit 2.0:
+Next-Gen Catalog: Përfshirja e modeleve iPhone 17 Pro dhe M5 Chips.
+Dynamic Sidebar: Meny anësore me efekt transparencë (Glassmorphism) për navigim të shpejtë sipas kategorive.
+Internal Image Hosting: Të gjitha imazhet janë zhvendosur në /images për të siguruar pavarësi nga serverat e jashtëm.
+
  🍏 Apple & JBL Premium Glassmorphism Store
 Kjo është një platformë e-commerce "High-End" e ndërtuar me fokus në UI/UX moderne (Glassmorphism) dhe Infrastrukturë DevOps. Projekti shërben si një "Technical Showcase" për implementimin e teknologjive cloud-native dhe automatizimit.
 🚀 Karakteristikat Teknike
