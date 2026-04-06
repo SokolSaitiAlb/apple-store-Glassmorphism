@@ -3,18 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apple & JBL | Novus Tech Showcase</title>
+    <title>Apple Premium Store | Novus</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="glass-nav">
-        <div class="logo">PREMIUM STORE</div>
-        <div class="filter-controls">
-            <button class="filter-btn active" data-category="all">Gjithçka</button>
-            <button class="filter-btn" data-category="iPhone">iPhone</button>
-            <button class="filter-btn" data-category="MacBook">MacBook</button>
-            <button class="filter-btn" data-category="Audio">JBL Audio</button>
-        </div>
+    <div class="bg-blur"></div>
+    
+    <nav class="glass-nav">
+        <div class="menu-toggle" id="openMenu">☰</div>
+        <div class="logo">APPLE STORE</div>
+        <div class="cart-icon">🛒</div>
+    </nav>
+
+    <div class="sidebar" id="sidebar">
+        <div class="close-btn" id="closeMenu">✕ Mbyll</div>
+        <div class="sidebar-header">Kategoritë</div>
+        <ul class="sidebar-links">
+            <li><a href="#" data-filter="Mac">Mac <span>›</span></a></li>
+            <li><a href="#" data-filter="iPhone">iPhone <span>›</span></a></li>
+            <li><a href="#" data-filter="Watch">Watch <span>›</span></a></li>
+            <li><a href="#" data-filter="Aksesorë">Aksesorë <span>›</span></a></li>
+        </ul>
     </div>
 
     <main class="shop-container" id="productGrid">
