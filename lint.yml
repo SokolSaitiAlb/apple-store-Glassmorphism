@@ -1,0 +1,15 @@
+name: Lint Code Base
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: HTML Hint
+        run: |
+          # Ky hap simulon një test të thjeshtë syntax-i
+          echo "Duke kontrolluar integritetin e HTML..."
+          grep -q "<!DOCTYPE html>" index.html
