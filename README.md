@@ -1,5 +1,5 @@
 🍏 Apple & JBL Premium Glassmorphism Store
-Kjo është një platformë e-commerce "High-End" e ndërtuar me fokus në UI/UX moderne (Glassmorphism) dhe Infrastrukturë DevOps. Projekti shërben si një "Technical Showcase" për implementimin e teknologjive cloud-native dhe automatizimit.
+Kjo është një platformë e-commerce "High-End" e ndërtuar me fokus në UI/UX moderne (Glassmorphism) dhe Infrastrukturë DevOps.
 ⛓️ Pipeline Arkitektura (GitOps)
 graph LR
   A[Sokol Code] -->|Git Push| B(GitHub)
@@ -11,28 +11,21 @@ graph LR
 🚀 Detajet e Deployment
 🔍 Risitë e Versionit 2.0:
  * Next-Gen Catalog: Përfshirja e modeleve iPhone 17 Pro dhe M5 Chips.
- * Dynamic Sidebar: Meny anësore me efekt transparencë (Glassmorphism) për navigim të shpejtë sipas kategorive.
- * Internal Image Hosting: Të gjitha imazhet janë zhvendosur në /images për të siguruar pavarësi nga serverat e jashtëm.
+ * Dynamic Sidebar: Meny anësore me efekt transparencë (Glassmorphism).
+ * Internal Image Hosting: Të gjitha imazhet janë optimizuar dhe zhvendosur në /images.
 🛠 Teknologjitë e Përdorura
 | Kategoria | Teknologjia |
 |---|---|
-| Frontend | HTML5, CSS3 (Advanced Grid & Glassmorphism), JS (ES6+) |
-| Data | JSON (Static API Simulation) |
+| Frontend | HTML5, CSS3, JS (ES6+) |
+| Data | JSON (Static API) |
 | Infrastructure | Docker (Nginx Alpine) |
-| Deployment | Netlify (CI/CD Pipeline) |
-🐳 Si ta nisni projektin me Docker
-Për të siguruar që mjedisi i zhvillimit është i njëjtë me atë të prodhimit, përdorni komandat e mëposhtme:
- * Build imazhin:
-   docker build -t apple-glass-store .
+| Deployment | Netlify (CI/CD) |
+🐳 Operacionet me Docker
+Përdorni këto komanda për të nisur mjedisin e izoluar:
+# Build
+docker build -t apple-glass-store .
 
- * Run container-in:
-   docker run -d -p 8080:80 apple-glass-store
+# Run
+docker run -d -p 8080:80 apple-glass-store
 
-Faqja do të jetë e qasshme në: http://localhost:8080
-📈 CI/CD Flow
-Projekti ndjek parimet e GitOps:
- * Çdo push në branch-in main aktivizon një build automatik në Netlify.
- * Sistemi kontrollon integritetin e skedarit products.json.
- * Faqja përditësohet live pa pasur nevojë për ndërhyrje manuale.
 👨‍💻 Zhvilluar nga: Sokol Saiti – Aspirant DevOps & Software Engineer
-Qëllimi: Inovacion përmes automatizimit dhe kodit të pastër.
