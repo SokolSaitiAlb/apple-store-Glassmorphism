@@ -1,0 +1,23 @@
+[
+  {
+    "name": "iPhone 15 Pro",
+    "category": "iPhone",
+    "price": "$999",
+    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch-naturaltitanium?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1692846357018",
+    "desc": "Titanium design."
+  },
+  {
+    "name": "MacBook Air M3",
+    "category": "MacBook",
+    "price": "$1299",
+    "image": "https://www.apple.com/v/macbook-air/s/images/overview/m3/hero_macbook_air_m3__ctpjtcl18m6u_large_2x.jpg",
+    "desc": "Supercharged by M3."
+  },
+  {
+    "name": "JBL Tour One M2",
+    "category": "Audio",
+    "price": "$299",
+    "image": "https://www.jbl.com/dw/image/v2/AA9_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw157e0344/JBL_TOUR_ONE_M2_Product%20Image_Hero_Black.png",
+    "desc": "Noise cancelling."
+  }
+]
