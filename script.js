@@ -1,41 +1,24 @@
-// 1. Prisni derisa të ngarkohet e gjithë faqja
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM u ngarkua. Sistemi i shportës është gati!");
+// Konfirmojmë që skedari u ngarkua
+console.log("🚀 Script.js u aktivizua me sukses!");
 
-    // 2. Event Delegation: Dëgjo çdo klikim në faqe
-    document.addEventListener('click', (e) => {
-        // Kontrollojmë nëse klikimi është bërë mbi butonin "Bli Tani"
-        if (e.target && e.target.innerText.includes('Bli Tani')) {
-            
-            // Marrim emrin e produktit që është sipër butonit (për njoftim)
-            const productCard = e.target.closest('div');
-            const productName = productCard ? productCard.querySelector('h2, h3')?.innerText : "Produkt";
+document.addEventListener('click', function (e) {
+    // Kontrollojmë nëse klikimi u bë mbi butonin "Bli Tani"
+    if (e.target && e.target.innerText.trim() === 'Bli Tani') {
+        console.log("🛒 Butoni u klikua! Po procesojmë...");
+        
+        // Gjejmë emrin e produktit (zakonisht është h2 ose h3 në card)
+        const card = e.target.closest('div');
+        const emri = card ? (card.querySelector('h2')?.innerText || card.querySelector('h3')?.innerText) : "Produkt i ri";
 
-            console.log(`SUKSES: Klikove mbi ${productName}`);
-            
-            // Thirr funksionin për shtim në shportë
-            addToCart(productName);
-        }
-    });
+        shtoNeShporte(emri);
+    }
 });
 
-// 3. Funksioni i Shportës
-function addToCart(name) {
-    // Marrim shportën ekzistuese nga LocalStorage
-    let cart = JSON.parse(localStorage.getItem('apple_cart')) || [];
+function shtoNeShporte(emri) {
+    let shporta = JSON.parse(localStorage.getItem('apple_cart')) || [];
+    shporta.push({ emri: emri, koha: new Date().toLocaleString() });
+    localStorage.setItem('apple_cart', JSON.stringify(shporta));
     
-    // Shtojmë produktin e ri
-    cart.push({
-        id: Date.now(),
-        name: name,
-        date: new Date().toISOString()
-    });
-
-    // Ruajmë shportën e përditësuar
-    localStorage.setItem('apple_cart', JSON.stringify(cart));
-
-    // Shfaqim njoftimin (Alert-i është më i sigurt për test)
-    alert(`✅ ${name} u shtua në shportë!\nTotal produkte: ${cart.length}`);
-    
-    console.log("Shporta aktuale:", cart);
+    // Njoftim vizual i menjëhershëm
+    alert("SHTUAR: " + emri + "\nShporta tani ka " + shporta.length + " produkte.");
 }
