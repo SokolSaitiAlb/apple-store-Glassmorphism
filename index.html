@@ -3,32 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apple Premium Store | Novus</title>
+    <title>Apple Premium Store | Sokol Saiti</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="bg-blur"></div>
-    
     <nav class="glass-nav">
-        <div class="menu-toggle" id="openMenu">☰</div>
         <div class="logo">APPLE STORE</div>
-        <div class="cart-icon">🛒</div>
+        <div class="nav-icons">
+            <div class="cart-icon-wrapper" id="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <i class="fas fa-bars" id="menu-btn"></i>
+        </div>
     </nav>
 
-    <div class="sidebar" id="sidebar">
-        <div class="close-btn" id="closeMenu">✕ Mbyll</div>
-        <div class="sidebar-header">Kategoritë</div>
-        <ul class="sidebar-links">
-            <li><a href="#" data-filter="Mac">Mac <span>›</span></a></li>
-            <li><a href="#" data-filter="iPhone">iPhone <span>›</span></a></li>
-            <li><a href="#" data-filter="Watch">Watch <span>›</span></a></li>
-            <li><a href="#" data-filter="Aksesorë">Aksesorë <span>›</span></a></li>
-        </ul>
+    <!-- Modal i Shportës -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <h2>Shporta Jote</h2>
+            <div id="cart-items-container">
+                <!-- Produktet shtohen dinamikisht këtu -->
+            </div>
+            <div class="cart-footer">
+                <div class="total-price">Totali: <span id="cart-total">$0</span></div>
+                <button class="checkout-btn">Përfundo Porosinë</button>
+            </div>
+        </div>
     </div>
 
-    <main class="shop-container" id="productGrid">
-        </main>
+    <main id="product-grid" class="container">
+        <!-- Renderimi i produkteve nga JS -->
+    </main>
 
     <script src="script.js"></script>
 </body>
 </html>
+
