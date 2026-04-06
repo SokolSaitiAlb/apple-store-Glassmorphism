@@ -1,89 +1,82 @@
-/* --- SHTIMET PËR MODALIN DHE SHPORTËN --- */
-
-.cart-icon-wrapper {
-    position: relative;
-    cursor: pointer;
-}
-
-.cart-count {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: #ff3b30;
+/* 1. Rregullimi i trupit të faqes (Background-i Luxe) */
+body {
+    margin: 0;
+    padding: 0;
+    background: #0f0f0f; /* E zezë e thellë */
     color: white;
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 50%;
-    display: none;
-}
-
-/* Modal Glassmorphism */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    position: relative;
-    margin: 10% auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 500px;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-.glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-}
-
-.close-modal {
-    float: right;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-/* Toast Notifications */
-.toast-notification {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 12px;
-    transform: translateY(100px);
-    transition: transform 0.3s ease;
-    z-index: 2000;
-}
-
-.toast-notification.show {
-    transform: translateY(0);
-}
-
-/* Elementet e Shportës */
-.cart-item {
+    font-family: 'Inter', sans-serif;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.cart-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 5px;
+/* 2. Container-i i produkteve (Grid-i) */
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 50px;
+    width: 90%;
 }
 
+/* 3. Kartela e produktit (Këtu rregullohen ikonat) */
+.product-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    border-color: #0071e3; /* Bluja e Apple */
+}
+
+/* FIX: Kjo ndalon ikonat të bëhen gjigante */
+.product-card img {
+    width: 100%;
+    height: 200px; /* Lartësi fikse */
+    object-fit: contain; /* Nuk e shtrembëron foton */
+    margin-bottom: 15px;
+}
+
+/* 4. Shporta në cep (Fixed Position) */
+#cart-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px); /* Efekti Glassmorphism */
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 280px;
+    z-index: 9999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#cart-items {
+    list-style: none;
+    padding: 0;
+    font-size: 0.9rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* 5. Butoni Bli Tani */
+.buy-btn {
+    background: #0071e3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.buy-btn:hover {
+    background: #005bb5;
+}
