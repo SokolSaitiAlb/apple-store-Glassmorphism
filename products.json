@@ -5,7 +5,7 @@
     "category": "iPhone",
     "price": "$1799",
     "image": "images/iphone17promax.png",
-    "desc": "The future of mobile computing. A19 Pro chip."
+    "desc": "The future of mobile computing."
   },
   {
     "id": 2,
@@ -13,22 +13,22 @@
     "category": "Mac",
     "price": "$1999",
     "image": "images/macbookm5.png",
-    "desc": "Unprecedented power. m5 architecture."
+    "desc": "Unprecedented power."
   },
   {
     "id": 3,
     "name": "Apple Watch Ultra 3",
     "category": "Watch",
     "price": "$999",
-    "image": "images/watchultra3.png",
-    "desc": "Built for the extremes. 72-hour battery."
+    "image": "images/watchultra3.jpg",
+    "desc": "Built for the extremes."
   },
   {
     "id": 4,
     "name": "MagSafe Silicone Case",
     "category": "Aksesorë",
     "price": "$49",
-    "image": "images/cover.png",
-    "desc": "Premium protection in every color."
+    "image": "images/cover.jpg",
+    "desc": "Premium protection."
   }
 ]
