@@ -1,47 +1,67 @@
-<div id="cart-container">
-    <h3>Shporta Ime</h3>
-    <ul id="cart-items">
-        </ul>
-</div>
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Store - Glassmorphism</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<main class="product-container" id="productGrid">
-    <div class="product-card">
-        <img src="images/iphone17promax.png" class="product-img">
-        <h2>iPhone 17 Pro Max</h2>
-        <p style="opacity:0.6">The future of mobile computing.</p>
-        <div style="display:flex; justify-content:space-between; margin-top:20px">
-            <span style="font-weight:bold">$1799</span>
-            <button class="buy-btn" data-id="1">Bli Tani</button>
-        </div>
+    <div id="cart-container">
+        <h3>🛒 Shporta Ime</h3>
+        <ul id="cart-items">
+            </ul>
     </div>
 
-    <div class="product-card">
-        <img src="images/macbookm5.png" class="product-img">
-        <h2>MacBook Pro M5</h2>
-        <p style="opacity:0.6">Unprecedented power.</p>
-        <div style="display:flex; justify-content:space-between; margin-top:20px">
-            <span style="font-weight:bold">$1999</span>
-            <button class="buy-btn" data-id="2">Bli Tani</button>
-        </div>
-    </div>
+    <header>
+        <h1>APPLE STORE</h1>
+    </header>
 
-    <div class="product-card">
-        <img src="images/watchultra3.jpg" class="product-img">
-        <h2>Apple Watch Ultra 3</h2>
-        <p style="opacity:0.6">Built for the extremes.</p>
-        <div style="display:flex; justify-content:space-between; margin-top:20px">
-            <span style="font-weight:bold">$999</span>
-            <button class="buy-btn" data-id="3">Bli Tani</button>
+    <main class="product-container" id="productGrid">
+        
+        <div class="product-card">
+            <img src="images/iphone17promax.png" class="product-img" alt="iPhone 17 Pro Max">
+            <h2>iPhone 17 Pro Max</h2>
+            <p>The future of mobile computing.</p>
+            <div class="card-footer">
+                <span class="price">$1799</span>
+                <button class="buy-btn">Bli Tani</button>
+            </div>
         </div>
-    </div>
 
-    <div class="product-card">
-        <img src="images/cover.jpg" class="product-img">
-        <h2>MagSafe Silicone Case</h2>
-        <p style="opacity:0.6">Premium protection.</p>
-        <div style="display:flex; justify-content:space-between; margin-top:20px">
-            <span style="font-weight:bold">$49</span>
-            <button class="buy-btn" data-id="4">Bli Tani</button>
+        <div class="product-card">
+            <img src="images/macbookm5.png" class="product-img" alt="MacBook Pro M5">
+            <h2>MacBook Pro M5</h2>
+            <p>Unprecedented power.</p>
+            <div class="card-footer">
+                <span class="price">$1999</span>
+                <button class="buy-btn">Bli Tani</button>
+            </div>
         </div>
-    </div>
-</main>
+
+        <div class="product-card">
+            <img src="images/watchultra3.jpg" class="product-img" alt="Apple Watch Ultra 3">
+            <h2>Apple Watch Ultra 3</h2>
+            <p>Built for the extremes.</p>
+            <div class="card-footer">
+                <span class="price">$999</span>
+                <button class="buy-btn">Bli Tani</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="images/cover.jpg" class="product-img" alt="MagSafe Case">
+            <h2>MagSafe Case</h2>
+            <p>Premium protection.</p>
+            <div class="card-footer">
+                <span class="price">$49</span>
+                <button class="buy-btn">Bli Tani</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
