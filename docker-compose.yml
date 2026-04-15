@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: apple_db
+    restart: always
+    env_file: .env
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    networks:
+      - apple_network
+
+  backend:
+    build: ./backend
+    container_name: apple_api
+    restart: always
+    env_file: .env
+    depends_on:
+      - db
+    networks:
+      - apple_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: apple_proxy
+    ports:
+      - "80:80"
+    volumes:
+      - .:/usr/share/nginx/html:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - apple_network
+
+networks:
+  apple_network:
+    driver: bridge
