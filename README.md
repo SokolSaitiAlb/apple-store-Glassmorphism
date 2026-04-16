@@ -1,3 +1,7 @@
+![Lint Status](https://github.com/SokolSaitiAlb/apple-store-Glassmorphism/actions/workflows/lint.yml/badge.svg)
+![Docker Build Status](https://github.com/SokolSaitiAlb/apple-store-Glassmorphism/actions/workflows/docker-ci.yml/badge.svg)
+
+
 ​🍏 Apple & JBL Premium Glassmorphism Store v2.0
 ​Kjo platformë e-commerce "High-End" nuk është thjesht një projekt UI/UX; është një ekosistem i plotë Full-Stack Microservices i ndërtuar për performancë maksimale, siguri dhe shkallëzim (scalability). Ky version shënon tranzicionin nga një prototip statik në një infrastrukturë të mirëfilltë DevOps.
 ​🏗️ Arkitektura e Sistemit (Microservices)
