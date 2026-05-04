@@ -51,5 +51,5 @@ docker-compose up -d --build
 docker-compose logs -f
 
 ​👨‍💻 Zhvilluar nga
-​Sokol Saiti – Aspirant DevOps & Software Engineer
+ ​Sokol Saiti – Aspirant DevOps & Software Engineer
 I fokusuar në optimizimin e sistemeve Linux (CachyOS), arkitekturat e performancës së lartë dhe automatizimin DevOps.
