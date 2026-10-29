@@ -2,44 +2,110 @@ name: Docker Infrastructure CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docker-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-
-    # Shërbimet ndihmëse (si PostgreSQL) që duhen për testim
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: apple_store_db
-        ports:
-          - 5432:5432
-        # Pret derisa database të jetë gati
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
+  backend-smoke:
+    name: Backend compile and HTTP smoke tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Docker Image
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
+      - name: Install backend dependencies
+        run: python -m pip install --disable-pip-version-check -r backend/requirements.txt
+      - name: Compile backend
+        run: python -m compileall -q backend
+      - name: Start API and verify HTTP endpoints
+        working-directory: backend
+        shell: bash
         run: |
-          # Ndërton imazhin duke përdorur Dockerfile-in tënd
-          docker build -t apple-store-app .
+          set -euo pipefail
+          python -m uvicorn main:app --host 127.0.0.1 --port 8000 > "$RUNNER_TEMP/backend.log" 2>&1 &
+          backend_pid=$!
+          trap 'kill "$backend_pid" 2>/dev/null || true' EXIT
+          ready=0
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --show-error http://127.0.0.1:8000/api/health > "$RUNNER_TEMP/health.json"; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+          if [[ "$ready" -ne 1 ]]; then
+            cat "$RUNNER_TEMP/backend.log"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          import os
+          from urllib.request import urlopen
 
-      - name: Network Check
+          with open(os.environ["RUNNER_TEMP"] + "/health.json", encoding="utf-8") as stream:
+              health = json.load(stream)
+          assert health.get("status") == "running", health
+          with urlopen("http://127.0.0.1:8000/api/products", timeout=5) as response:
+              products = json.load(response)
+          assert isinstance(products, list) and products, products
+          assert all("id" in product and "name" in product for product in products), products
+          print(f"API smoke tests passed; returned {len(products)} products.")
+          PY
+
+  compose-integration:
+    name: Build and smoke-test the Compose stack
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Create CI-only environment file
         run: |
-          # Teston nëse konteineri mund të komunikojë me database
-          docker run --network host --env DATABASE_URL=postgresql://user:password@localhost:5432/apple_store_db apple-store-app python -c "import sqlalchemy; print('Lidhja me DB u realizua me sukses!')" || echo "Lidhja dështoi, por workflow vazhdon për testin e build-it."
+          cp .env.example .env
+          sed -i 's/^POSTGRES_PASSWORD=$/POSTGRES_PASSWORD=ci-only-not-a-secret/' .env
+          chmod 600 .env
+      - name: Validate Compose configuration
+        run: docker compose config --quiet
+      - name: Build and start the full stack
+        run: docker compose up --build --detach
+      - name: Verify frontend and API through Nginx
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'docker compose down --remove-orphans' EXIT
+          frontend_ready=0
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:8080/ > "$RUNNER_TEMP/frontend.html"; then
+              if grep -qi "APPLE STORE" "$RUNNER_TEMP/frontend.html"; then
+                frontend_ready=1
+                break
+              fi
+            fi
+            sleep 2
+          done
+          [[ "$frontend_ready" -eq 1 ]] || { docker compose logs; exit 1; }
+          curl --fail --silent --show-error http://127.0.0.1:8080/api/health > "$RUNNER_TEMP/proxy-health.json"
+          python - <<'PY'
+          import json
+          import os
+
+          with open(os.environ["RUNNER_TEMP"] + "/proxy-health.json", encoding="utf-8") as stream:
+              health = json.load(stream)
+          assert health.get("status") == "running", health
+          print("Frontend and Nginx-to-FastAPI smoke tests passed.")
+          PY
