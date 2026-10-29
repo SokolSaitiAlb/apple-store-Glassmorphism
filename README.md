@@ -1,55 +1,64 @@
-![Lint Status](https://github.com/SokolSaitiAlb/apple-store-Glassmorphism/actions/workflows/lint.yml/badge.svg)
-![Docker Build Status](https://github.com/SokolSaitiAlb/apple-store-Glassmorphism/actions/workflows/docker-ci.yml/badge.svg)
+# Apple Store — Glassmorphism Demo
 
+A small Albanian-language storefront prototype with static frontend assets and a FastAPI demo backend. The repository includes a Docker Compose development stack with Nginx and PostgreSQL.
 
-​🍏 Apple & JBL Premium Glassmorphism Store v2.0
-​Kjo platformë e-commerce "High-End" nuk është thjesht një projekt UI/UX; është një ekosistem i plotë Full-Stack Microservices i ndërtuar për performancë maksimale, siguri dhe shkallëzim (scalability). Ky version shënon tranzicionin nga një prototip statik në një infrastrukturë të mirëfilltë DevOps.
-​🏗️ Arkitektura e Sistemit (Microservices)
-​Sistemi funksionon si një bashkësi shërbimesh të izoluara në kontejnerë, duke garantuar stabilitet dhe pavarësi teknologjike.
+## Implemented today
 
-graph TD
-    Client[🌐 Browser] -->|Port 80| Nginx[🛡️ Nginx Reverse Proxy]
-    Nginx -->|Shërben Faqen| Frontend[🎨 Frontend Glassmorphism]
-    Nginx -->|Drejton API| FastAPI[⚡ FastAPI Backend]
-    FastAPI -->|Lexon/Shkruan| Postgres[(🐘 PostgreSQL DB)]
-    FastAPI -->|Përshpejton me Cache| Redis[(🚀 Redis Cache)]
-    Admin -->|Monitoron| Portainer[🐳 Portainer GUI]
+- Static HTML/CSS/JavaScript storefront.
+- FastAPI endpoints: /api/health and /api/products.
+- Nginx serves frontend assets and reverse-proxies /api/ to FastAPI.
+- Compose defines PostgreSQL for development; the current /api/products endpoint still returns hard-coded sample data and does not yet read or write PostgreSQL.
+- GitHub Actions compiles the backend, tests real HTTP endpoints, validates Compose, builds the stack and checks frontend/API responses through Nginx.
 
-    ⛓️ Pipeline & CI/CD (GitOps)
-​Procesi i dërgimit të kodit ndjek standardet më të larta të automatizimit:
+Redis caching and Portainer are not currently part of the Compose stack. SSL termination, Cloudflare and a production deployment pipeline are also not configured here.
 
-graph LR
-  A[💻 Sokol Code] -->|Git Push| B(GitHub)
-  B -->|GitHub Actions| C{🔍 Lint & Security Test}
-  C -->|Pass| E(🐳 Docker Hub / Local Build)
-  E -->|Deploy| F[🚀 Production Server]
+## Safe local setup
 
-  🚀 Risitë e Versionit 2.0 (The Next Level)
-​Dynamic Inventory: Produktet nuk janë më statike. Çdo iPhone 17 Pro dhe M5 Chip vjen direkt nga PostgreSQL.
-​Ultra-Fast Performance: Implementimi i Redis Caching minimizon vonesat (latency) duke shërbyer kërkesat e shpeshta rrufe.
-​Reverse Proxy Management: Nginx tashmë menaxhon SSL-in, sigurinë dhe ndarjen e trafikut mes Frontend-it dhe Backend-it.
-​Centralized Monitoring: Integrimi i Portainer lejon kontrollin vizual të kontejnerëve në kohë reale.
-​Modern UI: Përmirësimi i efektit Glassmorphism dhe një Sidebar dinamik me transparencë të lartë.
+Docker Compose reads the local .env file. It is ignored by Git; do not commit real secrets.
 
-​🛠 Stiva Teknologjike (Tech Stack)
+```bash
+cp .env.example .env
+sed -i "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$(openssl rand -hex 32)/" .env
+chmod 600 .env
+docker compose config --quiet
+docker compose up --build -d
+```
 
-Kategoria Teknologjia Roli
-Frontend HTML5, CSS3 (Glassmorphism), JS (ES6+) UI/UX & Dynamic Fetching
-API Backend Python (FastAPI) Logjika, Validimi & Performance
-Database PostgreSQL 15 (Alpine) Ruajtja e të dhënave të strukturuara
-Caching Redis (Alpine) Shpejtësi ekstreme për kërkesat API
-Orchestration Docker & Docker Compose Izolimi dhe menaxhimi i shërbimeve
-Security Nginx & Cloudflare (Strict SSL) Siguria e trafikut dhe Reverse Proxy
+Open the local frontend at http://127.0.0.1:8080. The port binds to localhost by default, not every network interface.
 
-🐳 Operacionet me Docker
-​Për të nisur të gjithë ekosistemin (Postgres, Redis, Backend, Nginx, Portainer) me një komandë të vetme:
+Check services and logs:
 
-# Nisja e të gjithë infrastrukturës
-docker-compose up -d --build
+```bash
+docker compose ps
+docker compose logs --follow
+```
 
-# Monitorimi i logjeve
-docker-compose logs -f
+Stop the stack:
 
-​👨‍💻 Zhvilluar nga
- ​Sokol Saiti – Aspirant DevOps & Software Engineer
-I fokusuar në optimizimin e sistemeve Linux (CachyOS), arkitekturat e performancës së lartë dhe automatizimin DevOps.
+```bash
+docker compose down
+```
+
+The PostgreSQL data directory is ./data/db; back it up before removing or migrating data. The sample database password is local-only and must be unique. Do not publish .env, database dumps or production credentials.
+
+## Architecture
+
+```text
+Browser -> Nginx (127.0.0.1:8080)
+                 |-- static HTML/CSS/JS
+                 `-- /api/* -> FastAPI backend
+                                  |
+                         PostgreSQL service
+                         (configured, not yet
+                          used by current API)
+```
+
+The root Dockerfile copies only public frontend assets into Nginx. The backend runs as a non-root user in its own image. CI runs smoke tests against the actual backend and Compose stack; it fails when an endpoint or image build fails.
+
+## Next engineering step
+
+Implement a real SQLAlchemy model/session, health-check database connectivity, and tests covering CRUD and migrations before describing the API as database-backed or production-ready.
+
+## Author
+
+Sokol Saiti — Linux, web development and DevOps learning projects.
