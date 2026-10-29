@@ -1,6 +1,12 @@
 .git
 .github
-node_modules
-README.md
-Dockerfile
-.dockerignore
+.env
+.env.*
+!.env.example
+data/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.log
