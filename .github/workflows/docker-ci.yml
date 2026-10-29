@@ -99,7 +99,19 @@ jobs:
             sleep 2
           done
           [[ "$frontend_ready" -eq 1 ]] || { docker compose logs; exit 1; }
-          curl --fail --silent --show-error http://127.0.0.1:8080/api/health > "$RUNNER_TEMP/proxy-health.json"
+          api_ready=0
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:8080/api/health > "$RUNNER_TEMP/proxy-health.json"; then
+              api_ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [[ "$api_ready" -ne 1 ]]; then
+            docker compose ps
+            docker compose logs
+            exit 1
+          fi
           python - <<'PY'
           import json
           import os
