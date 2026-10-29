@@ -1,9 +1,12 @@
-.git
-.github
+.git/
+.github/
 .env
 .env.*
 !.env.example
 data/
+backend/
+nginx/
+node_modules/
 __pycache__/
 *.py[cod]
 .pytest_cache/
